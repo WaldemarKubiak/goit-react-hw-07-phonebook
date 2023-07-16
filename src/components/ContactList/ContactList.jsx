@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContactAction } from 'redux/actions';
+import { deleteContactAction } from 'redux/contactsSlice';
 import { getContacts, getFilter } from 'redux/selectors';
 import c from './ContactList.module.css';
 
@@ -9,6 +9,10 @@ export const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
+
+  const removeContact = id => {
+    return dispatch(deleteContactAction(id));
+  };
 
   return (
     <ul className={c.contactList}>
@@ -24,7 +28,7 @@ export const ContactList = () => {
                 key={contact.id}
                 name={contact.name}
                 type="submit"
-                onClick={() => dispatch(deleteContactAction(contact.id))}
+                onClick={() => removeContact(contact.id)}
               >
                 Delete
               </button>
